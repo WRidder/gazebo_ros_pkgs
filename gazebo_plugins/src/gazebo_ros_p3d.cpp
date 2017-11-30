@@ -250,6 +250,11 @@ void GazeboRosP3D::UpdateChild()
           vpos = frame_pose.Rot().RotateVector(vpos - frame_vpos);
           veul = frame_pose.Rot().RotateVector(veul - frame_veul);
         }
+        else {
+          // If no reference frame is given. Make sure twist is in body fixed frame.
+          vpos = this->link_->GetRelativeLinearVel().Ign();
+          veul = this->link_->GetRelativeAngularVel().Ign();
+        }
 
         // Apply Constant Offsets
         // apply xyz offsets and get position and rotation components
